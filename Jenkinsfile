@@ -2,27 +2,29 @@ pipeline {
     agent any
 
     stages {
-        stage("SCM Checkout") {
-        	script { 
-        		if (env.BRANCH_NAME == "master") {
-        			echo "Cloning the Master Branch"
+        steps {
+            stage("SCM Checkout") {
+            	script { 
+            		if (env.BRANCH_NAME == "master") {
+            			echo "Cloning the Master Branch"
 
-        			git branch: "${env.BRANCH_NAME}", credentialsId: "fa098c49-fb71-47fe-856a-5900b6551508", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
+            			git branch: "${env.BRANCH_NAME}", credentialsId: "fa098c49-fb71-47fe-856a-5900b6551508", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
 
-        		} else if (env.BRANCH_NAME == "feature") {
-        			echo "Cloning the release branch"
+            		} else if (env.BRANCH_NAME == "feature") {
+            			echo "Cloning the release branch"
 
-        			git branch: "${env.BRANCH_NAME}", credentialsId: "fa098c49-fb71-47fe-856a-5900b6551508", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
+            			git branch: "${env.BRANCH_NAME}", credentialsId: "fa098c49-fb71-47fe-856a-5900b6551508", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
 
-        		} else if (env.BRANCH_NAME == "devint") {
-        			echo "Cloning the dev_int branch"
+            		} else if (env.BRANCH_NAME == "devint") {
+            			echo "Cloning the dev_int branch"
 
-        			git branch: "${env.BRANCH_NAME}", credentialsId: "fa098c49-fb71-47fe-856a-5900b6551508", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
-        		} else {
+            			git branch: "${env.BRANCH_NAME}", credentialsId: "fa098c49-fb71-47fe-856a-5900b6551508", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
+            		} else {
 
-        			echo "Checkout done in respective branch"
-        		}
-        	}
+            			echo "Checkout done in respective branch"
+            		}
+            	}
+            }
         }
 
 
