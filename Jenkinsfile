@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     stages {
-        steps {
-            stage("SCM Checkout") {
+        stage("SCM Checkout") {
+            steps {
             	script { 
             		if (env.BRANCH_NAME == "master") {
             			echo "Cloning the Master Branch"
