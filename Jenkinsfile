@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage("SCM Checkout") {
             steps {
-                 { 
+                script { 
                     if (env.BRANCH_NAME == "master") {
                         echo "Cloning the Master Branch"
 
