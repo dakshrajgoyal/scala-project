@@ -1,10 +1,13 @@
+def FAILED_STAGE
+
 pipeline {
     agent any
 
     stages {
         stage("SCM Checkout") {
             steps {
-                script { 
+                script {
+                    FAILED_STAGE=env.STAGE_NAME
                     if (env.BRANCH_NAME == "master") {
                         echo "Cloning the Master Branch"
 
@@ -22,6 +25,7 @@ pipeline {
                     } else {
 
                         echo "Checkout done in respective branch"
+                        
                     }
                 }
             }
@@ -29,8 +33,9 @@ pipeline {
 
 
 
-        //stage('sbt build'){
-            steps {
+        stage('sbt build'){
+            //steps {
+                FAILED_STAGE=env.STAGE_NAME
                 //sh " ls ui/ "
                 //sh " ls && cd ui/ && npm install -g grunt-cli bower yo generator-karma generator-angular && npm install npm -g && npm install grunt-contrib-compass --save-dev && npm audit fix && npm install && grunt build --force "
                 //&& cat project/plugins.sbt "
@@ -56,7 +61,7 @@ pipeline {
             emailext (
                 subject: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
                 body: """<p>SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-                <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>""",
+                <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT; Failed Stage: ${FAILED_STAGE} </p>""",
                 to: '$DEFAULT_RECIPIENTS'            
             )
         }
