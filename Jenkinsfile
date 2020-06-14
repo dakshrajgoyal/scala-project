@@ -28,7 +28,7 @@ pipeline {
                     }
                     //echo "normal"
                 }
-                echo "normal"
+                sh 'echo "normal"'
             }
 
             post {
