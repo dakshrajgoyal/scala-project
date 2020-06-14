@@ -7,7 +7,7 @@ pipeline {
             steps {
                 script {
                     
-                    if (env.BRANCH_NAME == "master") {
+                    //if (env.BRANCH_NAME == "master") {
                         echo "Cloning the Master Branch"
 
                         git branch: "${env.BRANCH_NAME}", credentialsId: "fa098c49-fb71-47fe-856a-5900b6551508", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
