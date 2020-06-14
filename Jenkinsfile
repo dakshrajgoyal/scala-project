@@ -26,8 +26,9 @@ pipeline {
                         echo "Checkout done in respective branch"
                         
                     }
-                    echo "normal"
+                    //echo "normal"
                 }
+                echo "normal"
             }
 
             post {
