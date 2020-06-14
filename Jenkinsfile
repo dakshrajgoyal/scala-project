@@ -50,7 +50,7 @@ pipeline {
             emailext (
                 to: '$DEFAULT_RECIPIENTS',           
                 subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
-                body: """FINISHED: Job "${env.STAGE_NAME} ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}/console)"""
+                body: """FINISHED: getCurrentStageName() ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
             )
         }
 
@@ -58,7 +58,7 @@ pipeline {
             emailext (
                 to: '$DEFAULT_RECIPIENTS',           
                 subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
-                body: """FINISHED: Job "${env.STAGE_NAME} ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}/console)"""
+                body: """FINISHED: getCurrentStageName() ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
             )
         }
     }
