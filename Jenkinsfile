@@ -1,4 +1,5 @@
 def FAILED_STAGE = env.STAGE_NAME()
+
 pipeline {
     agent any
 
