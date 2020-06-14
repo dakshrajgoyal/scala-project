@@ -17,7 +17,7 @@ pipeline {
 
                         git branch: "${env.BRANCH_NAME}", credentialsId: "fa098c49-fb71-47fe-856a-5900b6551508", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
 
-                    } else if (env.BRANCH_NAME == "devint") {
+                    } elsif (env.BRANCH_NAME == "devint") {
                         echo "Cloning the dev_int branch"
 
                         git branch: "${env.BRANCH_NAME}", credentialsId: "fa098c49-fb71-47fe-856a-5900b6551508", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
