@@ -47,15 +47,19 @@ pipeline {
 
     post {
         success {
-            mail to: '$DEFAULT_RECIPIENTS',           
-            subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
-            body: "${env.BUILD_URL} has result ${currentBuild.result}"
+            emailext (
+                to: '$DEFAULT_RECIPIENTS',           
+                subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
+                body: "${env.BUILD_URL} has result ${currentBuild.result}"
+            )
         }
 
         failure {
-            mail to: '$DEFAULT_RECIPIENTS',           
-            subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
-            body: "${env.BUILD_URL} has result ${currentBuild.result}"
+            emailext (
+                to: '$DEFAULT_RECIPIENTS',           
+                subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
+                body: "${env.BUILD_URL} has result ${currentBuild.result}"
+            )
         }
     }
 }
