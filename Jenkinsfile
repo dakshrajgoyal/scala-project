@@ -23,11 +23,10 @@ pipeline {
                         git branch: "${env.BRANCH_NAME}", credentialsId: "fa098c49-fb71-47fe-856a-5900b6551508", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
                     } else {
                         
-                        FAILED_STAGE=env.STAGE_NAME
-
                         echo "Checkout done in respective branch"
                         
                     }
+                    FAILED_STAGE=env.STAGE_NAME
                 }
             }
         }
@@ -42,9 +41,9 @@ pipeline {
                 //&& cat project/plugins.sbt "
                 sh "${tool name: 'Sbt_Home', type:'org.jvnet.hudson.plugins.SbtPluginBuilder$SbtInstallation'}/bin/sbt package "
                 sh " pwd "
-                
-                FAILED_STAGE=env.STAGE_NAME
             }
+            
+            FAILED_STAGE=env.STAGE_NAME
         }
     }
 
