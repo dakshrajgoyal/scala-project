@@ -50,7 +50,8 @@ pipeline {
             emailext (
                 subject: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
                 body: """<p>SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-                <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]/console</a>&QUOT;</p>""",
+                <p>Check console output at &QUOT;<a href='${env.JOB_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]/console</a>&QUOT;</p>""",
+                //Check console output at &QUOT;multibranch/master [38]&QUOT; Failed Stage: null 
                 to: '$DEFAULT_RECIPIENTS'
             )
 
@@ -60,7 +61,7 @@ pipeline {
             emailext (
                 subject: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
                 body: """<p>FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-                <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT; Failed Stage: ${FAILED_STAGE} </p>""",
+                <p>Check console output at &QUOT;<a href='${env.JOB_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT; Failed Stage: ${FAILED_STAGE} </p>""",
                 to: '$DEFAULT_RECIPIENTS'            
             )
         }
