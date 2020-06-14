@@ -1,16 +1,15 @@
-//def FAILED_STAGE = env.STAGE_NAME
-
 pipeline {
     agent any
 
     stages {
         stage("SCM Checkout") {
-            environment {
-                def STAGE_NAME = "SCM Checkout"
-            }
+            //environment {
+                //def STAGE_NAME = "SCM Checkout"
+            //}
             
             steps {
                 script {
+                    stage = env.STAGE_NAME
                     
                     if (env.BRANCH_NAME == "master") {
                         echo "Cloning the Master Branch"
@@ -38,10 +37,11 @@ pipeline {
 
 
         stage('sbt build'){
-            environment {
-                def STAGE_NAME = "SBt Build"
-            }
+            //environment {
+               // def STAGE_NAME = "SBt Build"
+            //}
             steps {
+                stage = env.STAGE_NAME
                 //FAILED_STAGE=env.STAGE_NAME
                 //sh " ls ui/ "
                 //sh " ls && cd ui/ && npm install -g grunt-cli bower yo generator-karma generator-angular && npm install npm -g && npm install grunt-contrib-compass --save-dev && npm audit fix && npm install && grunt build --force "
@@ -66,7 +66,7 @@ pipeline {
             emailext (
                 to: '$DEFAULT_RECIPIENTS',           
                 subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
-                body: """FINISHED: Job "${env.FAILED_STAGE} ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
+                body: """FINISHED: Job "${stage} ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
             )
         }
     }
