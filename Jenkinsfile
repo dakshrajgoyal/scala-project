@@ -4,6 +4,7 @@ pipeline {
 
     stages {
         stage("SCM Checkout") {
+            
             steps {
                 script {
                     
@@ -50,7 +51,7 @@ pipeline {
             emailext (
                 to: '$DEFAULT_RECIPIENTS',           
                 subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
-                body: """FINISHED: getCurrentStageName() ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
+                body: """FINISHED: Job "${env.FAILED_STAGE} ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
             )
         }
 
@@ -58,7 +59,7 @@ pipeline {
             emailext (
                 to: '$DEFAULT_RECIPIENTS',           
                 subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
-                body: """FINISHED: getCurrentStageName() ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
+                body: """FINISHED: Job "${env.FAILED_STAGE} ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
             )
         }
     }
