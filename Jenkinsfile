@@ -27,16 +27,16 @@ pipeline {
                         
                     }
                 }
+            }
 
-                post {
-                    failure {
-                        emailext (
-                            subject: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-                            body: """<p>SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-                            <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT; Failed Stage: ${FAILED_STAGE} </p>""",
-                            to: '$DEFAULT_RECIPIENTS'
-                        )
-                    }
+            post {
+                failure {
+                    emailext (
+                        subject: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                        body: """<p>SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+                        <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT; Failed Stage: ${FAILED_STAGE} </p>""",
+                        to: '$DEFAULT_RECIPIENTS'
+                    )
                 }
             }
         }
@@ -51,16 +51,16 @@ pipeline {
                 //&& cat project/plugins.sbt "
                 sh "${tool name: 'Sbt_Home', type:'org.jvnet.hudson.plugins.SbtPluginBuilder$SbtInstallation'}/bin/sbt package "
                 sh " pwd "
+            }
 
-                post {
-                    failure {
-                        emailext (
-                            subject: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-                            body: """<p>SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-                            <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT; Failed Stage: ${FAILED_STAGE} </p>""",
-                            to: '$DEFAULT_RECIPIENTS'
-                        )
-                    }
+            post {
+                failure {
+                    emailext (
+                        subject: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                        body: """<p>SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+                        <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT; Failed Stage: ${FAILED_STAGE} </p>""",
+                        to: '$DEFAULT_RECIPIENTS'
+                    )
                 }
             }
         }
