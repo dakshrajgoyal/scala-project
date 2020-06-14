@@ -5,6 +5,8 @@ pipeline {
     stages {
         stage("SCM Checkout") {
             
+            STAGE_NAME = getCurrentStage()
+            
             steps {
                 script {
                     
@@ -34,6 +36,7 @@ pipeline {
 
 
         stage('sbt build'){
+            STAGE_NAME = getCurrentStage()
             steps {
                 //FAILED_STAGE=env.STAGE_NAME
                 //sh " ls ui/ "
