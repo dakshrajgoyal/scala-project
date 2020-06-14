@@ -50,7 +50,7 @@ pipeline {
             emailext (
                 to: '$DEFAULT_RECIPIENTS',           
                 subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
-                body: "${env.BUILD_URL}/console has result ${currentBuild.result}"
+                body: """FINISHED: Job "${env.STAGE_NAME} ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}/console)"""
             )
         }
 
@@ -58,7 +58,7 @@ pipeline {
             emailext (
                 to: '$DEFAULT_RECIPIENTS',           
                 subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
-                body: "${env.BUILD_URL}/console has result ${currentBuild.result}"
+                body: """FINISHED: Job "${env.STAGE_NAME} ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}/console)"""
             )
         }
     }
