@@ -1,11 +1,12 @@
-def FAILED_STAGE = env.STAGE_NAME
+//def FAILED_STAGE = env.STAGE_NAME
 pipeline {
     agent any
 
     stages {
         stage("SCM Checkout") {
-            
-            STAGE_NAME = getCurrentStage()
+            environment {
+                STAGE_NAME = "SCM Checkout"
+            }
             
             steps {
                 script {
@@ -36,7 +37,9 @@ pipeline {
 
 
         stage('sbt build'){
-            STAGE_NAME = getCurrentStage()
+            environment {
+                STAGE_NAME = "SBt Build"
+            }
             steps {
                 //FAILED_STAGE=env.STAGE_NAME
                 //sh " ls ui/ "
