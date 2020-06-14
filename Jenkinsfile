@@ -1,5 +1,4 @@
-def FAILED_STAGE
-
+//def FAILED_STAGE
 pipeline {
     agent any
 
@@ -57,7 +56,7 @@ pipeline {
 
         }
 
-        FAILURE {
+        failure {
             emailext (
                 subject: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
                 body: """<p>SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
