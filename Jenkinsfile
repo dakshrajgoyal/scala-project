@@ -41,23 +41,4 @@ pipeline {
             }
         }
     }
-
-
-    post {
-        success {
-            emailext (
-                to: '$DEFAULT_RECIPIENTS',           
-                subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
-                body: """FINISHED: Job "${stage} ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
-            )
-        }
-
-        failure {
-            emailext (
-                to: '$DEFAULT_RECIPIENTS',           
-                subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
-                body: """FINISHED: Job "${stage} ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""            
-            )
-        }
-    }
 }
