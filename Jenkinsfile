@@ -3,13 +3,13 @@ pipeline {
 
     stages {
         stage("SCM Checkout") {
-            //environment {
-                //def STAGE_NAME = "SCM Checkout"
-            //}
+            environment {
+                stage = env.STAGE_NAME
+            }
             
             steps {
                 script {
-                    stage = env.STAGE_NAME
+                    //stage = env.STAGE_NAME
                     
                     if (env.BRANCH_NAME == "master") {
                         echo "Cloning the Master Branch"
@@ -37,20 +37,17 @@ pipeline {
 
 
         stage('sbt build'){
-            //environment {
-               // def STAGE_NAME = "SBt Build"
-            //}
-            steps {
-                script {
-                    
-                    stage = env.STAGE_NAME
-                    //FAILED_STAGE=env.STAGE_NAME
-                    //sh " ls ui/ "
-                    //sh " ls && cd ui/ && npm install -g grunt-cli bower yo generator-karma generator-angular && npm install npm -g && npm install grunt-contrib-compass --save-dev && npm audit fix && npm install && grunt build --force "
-                    //&& cat project/plugins.sbt "
-                    ${tool name: 'Sbt_Home', type:'org.jvnet.hudson.plugins.SbtPluginBuilder$SbtInstallation'}/bin/sbt package
-                    pwd
-                }
+            environment {
+                stage = env.STAGE_NAME
+            }
+            steps {          
+                //stage = env.STAGE_NAME
+                //FAILED_STAGE=env.STAGE_NAME
+                //sh " ls ui/ "
+                //sh " ls && cd ui/ && npm install -g grunt-cli bower yo generator-karma generator-angular && npm install npm -g && npm install grunt-contrib-compass --save-dev && npm audit fix && npm install && grunt build --force "
+                //&& cat project/plugins.sbt "
+                sh " ${tool name: 'Sbt_Home', type:'org.jvnet.hudson.plugins.SbtPluginBuilder$SbtInstallation'}/bin/sbt package "
+                sh " pwd "
             }
         }
     }
@@ -61,7 +58,7 @@ pipeline {
             emailext (
                 to: '$DEFAULT_RECIPIENTS',           
                 subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
-                body: """FINISHED: Job "${env.FAILED_STAGE} ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
+                body: """FINISHED: Job "${env.stage} ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
             )
         }
 
@@ -69,7 +66,7 @@ pipeline {
             emailext (
                 to: '$DEFAULT_RECIPIENTS',           
                 subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
-                body: """FINISHED: Job "${stage} ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
+                body: """FINISHED: Job "${env.stage} ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
             )
         }
     }
