@@ -30,24 +30,23 @@ pipeline {
                     }
                 }
             }
-        }
+            post {
+                success {
+                    emailext (
+                        to: '$DEFAULT_RECIPIENTS',           
+                        subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
+                        body: """FINISHED: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
+                    )
 
-        post {
-            success {
-                emailext (
-                    to: '$DEFAULT_RECIPIENTS',           
-                    subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
-                    body: """FINISHED: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
-                )
+                }
 
-            }
-
-            failure {
-                emailext (
-                    to: '$DEFAULT_RECIPIENTS',           
-                    subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
-                    body: """FINISHED: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""            
-                )
+                failure {
+                    emailext (
+                        to: '$DEFAULT_RECIPIENTS',           
+                        subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
+                        body: """FINISHED: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""            
+                    )
+                }
             }
         }
 
@@ -60,24 +59,24 @@ pipeline {
                 sh "${tool name: 'Sbt_Home', type:'org.jvnet.hudson.plugins.SbtPluginBuilder$SbtInstallation'}/bin/sbt package"
                 sh "pwd"
             }
-        }
+            
+            post {
+                success {
+                    emailext (
+                        to: '$DEFAULT_RECIPIENTS',           
+                        subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
+                        body: """FINISHED: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
+                    )
 
-        post {
-            success {
-                emailext (
-                    to: '$DEFAULT_RECIPIENTS',           
-                    subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
-                    body: """FINISHED: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
-                )
+                }
 
-            }
-
-            failure {
-                emailext (
-                    to: '$DEFAULT_RECIPIENTS',           
-                    subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
-                    body: """FINISHED: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""            
-                )
+                failure {
+                    emailext (
+                        to: '$DEFAULT_RECIPIENTS',           
+                        subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
+                        body: """FINISHED: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""            
+                    )
+                }
             }
         }
     }
