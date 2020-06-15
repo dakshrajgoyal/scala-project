@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage("SCM Checkout") {
             environment {
-                stage = env.STAGE_NAME
+                def stage = env.STAGE_NAME
             }
             
             steps {
@@ -38,7 +38,7 @@ pipeline {
 
         stage('sbt build'){
             environment {
-                stage = env.STAGE_NAME
+                def stage = env.STAGE_NAME
             }
             steps {          
                 //stage = env.STAGE_NAME
