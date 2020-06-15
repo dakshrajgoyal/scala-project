@@ -5,7 +5,9 @@ pipeline {
         stage("SCM Checkout") {
             steps {
                 script {
-                    //echo "${STAGE_NAME}"
+                    
+                    echo "${STAGE_NAME}"
+                    
                     if (env.BRANCH_NAME == "master") {
                         echo "Cloning the Master Branch"
 
@@ -32,6 +34,7 @@ pipeline {
 
         stage('sbt build') {
             steps {
+                sh "echo '${STAGE_NAME}' "
                 //sh " ls ui/ "
                 //sh " ls && cd ui/ && npm install -g grunt-cli bower yo generator-karma generator-angular && npm install npm -g && npm install grunt-contrib-compass --save-dev && npm audit fix && npm install && grunt build --force "
                 //&& cat project/plugins.sbt "
