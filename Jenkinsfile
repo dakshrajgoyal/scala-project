@@ -47,8 +47,8 @@ pipeline {
                 //sh " ls ui/ "
                 //sh " ls && cd ui/ && npm install -g grunt-cli bower yo generator-karma generator-angular && npm install npm -g && npm install grunt-contrib-compass --save-dev && npm audit fix && npm install && grunt build --force "
                 //&& cat project/plugins.sbt "
-                    sh(${tool name: 'Sbt_Home', type:'org.jvnet.hudson.plugins.SbtPluginBuilder$SbtInstallation'}/bin/sbt package)
-                    sh(pwd)
+                    sh("${tool name: 'Sbt_Home', type:'org.jvnet.hudson.plugins.SbtPluginBuilder$SbtInstallation'}/bin/sbt package")
+                    sh("pwd")
                 }
             }
         }
