@@ -47,9 +47,9 @@ pipeline {
                 //&& cat project/plugins.sbt "
                 sh " ${tool name: 'Sbt_Home', type:'org.jvnet.hudson.plugins.SbtPluginBuilder$SbtInstallation'}/bin/sbt package "
                 sh " pwd "
-                script {
-                    stage = env.STAGE_NAME
-                }
+                //script {
+                    //stage = env.STAGE_NAME
+                //}
             }
         }
     }
