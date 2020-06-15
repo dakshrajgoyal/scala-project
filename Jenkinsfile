@@ -38,10 +38,7 @@ pipeline {
         stage('sbt build'){
             //environment {
                 //stage = STAGE_NAME
-            //}
-            script {
-                stage = env.STAGE_NAME
-            }  
+            //}  
             steps {          
                 //stage = env.STAGE_NAME
                 //FAILED_STAGE=env.STAGE_NAME
@@ -50,6 +47,9 @@ pipeline {
                 //&& cat project/plugins.sbt "
                 sh " ${tool name: 'Sbt_Home', type:'org.jvnet.hudson.plugins.SbtPluginBuilder$SbtInstallation'}/bin/sbt package "
                 sh " pwd "
+                script {
+                    stage = env.STAGE_NAME
+                }
             }
         }
     }
