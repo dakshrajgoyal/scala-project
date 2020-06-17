@@ -86,7 +86,7 @@ pipeline {
             emailext (
                 to: '$DEFAULT_RECIPIENTS',           
                 subject: "Status of Overall pipeline:  ${currentBuild.fullDisplayName}",
-                body: """FINISHED: Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
+                body: """FINISHED Successfully: Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
             )
 
         }
