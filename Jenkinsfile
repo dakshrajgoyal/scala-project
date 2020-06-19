@@ -33,7 +33,7 @@ pipeline {
             post {
                 success {
                     emailext (
-                        to: '${env.GIT_COMMITTER_EMAIL}',           
+                        to: '${GIT_COMMITTER_EMAIL}',           
                         subject: "Status of pipeline: Success ${currentBuild.fullDisplayName}",
                         body: """FINISHED Successfully: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
                     )
@@ -42,7 +42,7 @@ pipeline {
 
                 failure {
                     emailext (
-                        to: '${env.GIT_COMMITTER_EMAIL}',           
+                        to: '${GIT_COMMITTER_EMAIL}',           
                         subject: "Status of pipeline: Failure ${currentBuild.fullDisplayName}",
                         body: """Failed: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""            
                     )
