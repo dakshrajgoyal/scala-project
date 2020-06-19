@@ -1,3 +1,4 @@
+foo=$(git show -s --pretty=%an)
 pipeline {
     agent any
 
@@ -33,7 +34,7 @@ pipeline {
             post {
                 success {
                     emailext (
-                        to: '${GIT_COMMITTER_EMAIL}',           
+                        to: '${foo}',           
                         subject: "Status of pipeline: Success ${currentBuild.fullDisplayName}",
                         body: """FINISHED Successfully: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
                     )
@@ -42,7 +43,7 @@ pipeline {
 
                 failure {
                     emailext (
-                        to: '${GIT_COMMITTER_EMAIL}',           
+                        to: '${foo}',           
                         subject: "Status of pipeline: Failure ${currentBuild.fullDisplayName}",
                         body: """Failed: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""            
                     )
