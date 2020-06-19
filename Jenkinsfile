@@ -6,7 +6,7 @@ pipeline {
         stage("SCM Checkout") {
             steps {
                 script {
-                    GIT_EMAIL=$(git --no-pager show -s --format='%ae' $GIT_COMMIT)
+                    def GIT_EMAIL=$(git --no-pager show -s --format='%ae' $GIT_COMMIT)
                     echo "${STAGE_NAME}"
                     
                     if (env.BRANCH_NAME == "master") {
