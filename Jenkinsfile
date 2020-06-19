@@ -6,7 +6,7 @@ pipeline {
         stage("SCM Checkout") {
             steps {
                 script {
-                    
+                    GIT_EMAIL=$(git --no-pager show -s --format='%ae' $GIT_COMMIT)
                     echo "${STAGE_NAME}"
                     
                     if (env.BRANCH_NAME == "master") {
@@ -34,7 +34,6 @@ pipeline {
             post {
                 success {
                     emailext (
-                        GIT_EMAIL=$(git --no-pager show -s --format='%ae' $GIT_COMMIT)
                         to: '${GIT_EMAIL}',           
                         subject: "Status of pipeline: Success ${currentBuild.fullDisplayName}",
                         body: """FINISHED Successfully: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
