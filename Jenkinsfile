@@ -34,7 +34,8 @@ pipeline {
             post {
                 success {
                     emailext (
-                        to: '${git show -s --pretty=%an}',           
+                        GIT_EMAIL=$(git --no-pager show -s --format='%ae' $GIT_COMMIT)
+                        to: '${GIT_EMAIL}',           
                         subject: "Status of pipeline: Success ${currentBuild.fullDisplayName}",
                         body: """FINISHED Successfully: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
                     )
