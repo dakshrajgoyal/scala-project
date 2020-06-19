@@ -4,6 +4,10 @@ pipeline {
 
     stages {
         stage("SCM Checkout") {
+                env.GIT_COMMITTER_EMAIL = sh(
+                   script: "git --no-pager show -s --format='%ae'",
+                   returnStdout: true
+                ).trim()}
             steps {
                 script {
                     def foo=$(git show -s --pretty=%an)
@@ -34,7 +38,7 @@ pipeline {
             post {
                 success {
                     emailext (
-                        to: '${foo}',           
+                        to: '${env.GIT_COMMITTER_EMAIL}',           
                         subject: "Status of pipeline: Success ${currentBuild.fullDisplayName}",
                         body: """FINISHED Successfully: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
                     )
