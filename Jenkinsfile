@@ -1,4 +1,4 @@
-foo=$(git show -s --pretty=%an)
+
 pipeline {
     agent any
 
@@ -34,7 +34,7 @@ pipeline {
             post {
                 success {
                     emailext (
-                        to: '${foo}',           
+                        to: '${git show -s --pretty=%an}',           
                         subject: "Status of pipeline: Success ${currentBuild.fullDisplayName}",
                         body: """FINISHED Successfully: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
                     )
