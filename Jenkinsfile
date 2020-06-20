@@ -59,6 +59,7 @@ pipeline {
                 //&& cat project/plugins.sbt "
                 sh "${tool name: 'Sbt_Home', type:'org.jvnet.hudson.plugins.SbtPluginBuilder$SbtInstallation'}/bin/sbt package"
                 sh "pwd"
+                sh "echo 'Successfully Build the stage.'"
             }
             
             post {
