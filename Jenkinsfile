@@ -5,13 +5,10 @@ pipeline {
         stage("SCM Checkout") {
             steps {
                 script {
-                    
-                    def COMMITTER_EMAIL = sh (
-                        script: "/usr/bin/git --no-pager show -s --format=%%ae",
-                          returnStdout: true
-                      ).split('\r\n')[2].trim()
+                    def GIT_EMAIL=$(/usr/bin/git --no-pager show -s --format='%ae' $GIT_COMMIT)
+                    echo "${GIT_EMAIL}"
 
-                    echo "The last commit was written by ${COMMITTER_EMAIL}"
+                    //echo "The last commit was written by ${COMMITTER_EMAIL}"
                     
                     
                     echo "${STAGE_NAME}"
@@ -36,9 +33,6 @@ pipeline {
                         echo "Checkout done in respective branch"
                         
                     }
-                    
-                    GIT_EMAIL=$(git --no-pager show -s --format='%ae' $GIT_COMMIT)
-                    echo "$GIT_EMAIL"
                 }
             }
             post {
