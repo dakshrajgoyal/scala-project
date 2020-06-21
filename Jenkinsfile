@@ -55,8 +55,8 @@ pipeline {
 
         stage('sbt build') {
             steps {
-                sh "whereis git"
-                sh "which git"
+                //sh "whereis git"
+                //sh "which git"
                 sh "echo '${STAGE_NAME}' "
                 //sh " ls ui/ "
                 //sh " ls && cd ui/ && npm install -g grunt-cli bower yo generator-karma generator-angular && npm install npm -g && npm install grunt-contrib-compass --save-dev && npm audit fix && npm install && grunt build --force "
