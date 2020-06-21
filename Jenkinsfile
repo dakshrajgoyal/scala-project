@@ -17,7 +17,7 @@ pipeline {
 
                         git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
                         
-                        def committerEmail = sh (
+                        def env.committerEmail = sh (
                               script: 'git --no-pager show -s --format=\'%ae\'',
                               returnStdout: true
                             ).trim()
@@ -30,7 +30,7 @@ pipeline {
                         echo "Cloning the release branch"
 
                         git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
-                        def committerEmail = sh (
+                        def env.committerEmail = sh (
                               script: 'git --no-pager show -s --format=\'%ae\'',
                               returnStdout: true
                             ).trim()
@@ -44,7 +44,7 @@ pipeline {
 
                         git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
                         
-                        def committerEmail = sh (
+                        def env.committerEmail = sh (
                               script: 'git --no-pager show -s --format=\'%ae\'',
                               returnStdout: true
                             ).trim()
@@ -58,14 +58,14 @@ pipeline {
                         echo "Checkout done in respective branch"
                         
                     }
-                    echo "${committerEmail}"
+                    echo "${env.committerEmail}"
                 }
             }
             post {
                 success {
                     emailext (
                         
-                        to: '${committerEmail}',           
+                        to: '${env.committerEmail}',           
                         subject: "Status of pipeline: Success ${currentBuild.fullDisplayName}",
                         body: """FINISHED Successfully: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
                         //recipientProviders: [[$class: 'DevelopersRecipientProvider']]
@@ -76,7 +76,7 @@ pipeline {
                 failure {
                     emailext (
                         
-                        to: '${committerEmail}',           
+                        to: '${env.committerEmail}',           
                         subject: "Status of pipeline: Failure ${currentBuild.fullDisplayName}",
                         body: """Failed: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
                         //recipientProviders: [[$class: 'DevelopersRecipientProvider']]
