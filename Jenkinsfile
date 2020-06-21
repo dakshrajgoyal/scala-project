@@ -17,7 +17,7 @@ pipeline {
 
                         git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
                         
-                        committerEmail = sh (
+                        def committerEmail = sh (
                               script: 'git --no-pager show -s --format=\'%ae\'',
                               returnStdout: true
                             ).trim()
@@ -30,7 +30,7 @@ pipeline {
                         echo "Cloning the release branch"
 
                         git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
-                        committerEmail = sh (
+                        def committerEmail = sh (
                               script: 'git --no-pager show -s --format=\'%ae\'',
                               returnStdout: true
                             ).trim()
@@ -44,7 +44,7 @@ pipeline {
 
                         git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
                         
-                        committerEmail = sh (
+                        def committerEmail = sh (
                               script: 'git --no-pager show -s --format=\'%ae\'',
                               returnStdout: true
                             ).trim()
