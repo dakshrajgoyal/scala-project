@@ -36,20 +36,22 @@ pipeline {
             post {
                 success {
                     emailext (
-                        recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                        
                         //to: '${DEFAULT_RECIPIENTS}',           
                         subject: "Status of pipeline: Success ${currentBuild.fullDisplayName}",
                         body: """FINISHED Successfully: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
+                        recipientProviders: [[$class: 'DevelopersRecipientProvider']]
                     )
 
                 }
 
                 failure {
                     emailext (
-                        recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                        
                         //to: '${DEFAULT_RECIPIENTS}',           
                         subject: "Status of pipeline: Failure ${currentBuild.fullDisplayName}",
-                        body: """Failed: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""            
+                        body: """Failed: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
+                        recipientProviders: [[$class: 'DevelopersRecipientProvider']]
                     )
                 }
             }
