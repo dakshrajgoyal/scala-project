@@ -17,12 +17,12 @@ pipeline {
 
                         git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
                         
-                        def committerEmail = sh (
-                              script: 'git --no-pager show -s --format=\'%ae\'',
-                              returnStdout: true
-                            ).trim()
-                        echo "${committerEmail}"
-                        DEFAULT_RECIPIENTS=${ENV,var="committerEmail"}
+                        //def committerEmail = sh (
+                              //script: 'git --no-pager show -s --format=\'%ae\'',
+                              //returnStdout: true
+                            //).trim()
+                        //echo "${committerEmail}"
+                        //DEFAULT_RECIPIENTS=${ENV,var="committerEmail"}
                         //DEFAULT_RECIPIENTS="${committerEmail}"
                         //echo "$PWD"
                         //def GIT_EMAIL=$($PWD/usr/bin/jgit show -s --format='%ae' $GIT_COMMIT)
@@ -32,12 +32,12 @@ pipeline {
                         echo "Cloning the release branch"
 
                         git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
-                        def committerEmail = sh (
-                              script: 'git --no-pager show -s --format=\'%ae\'',
-                              returnStdout: true
-                            ).trim()
-                        echo "${committerEmail}"
-                        DEFAULT_RECIPIENTS=${ENV,var="committerEmail"}
+                        //def committerEmail = sh (
+                              //script: 'git --no-pager show -s --format=\'%ae\'',
+                              //returnStdout: true
+                            //).trim()
+                        //echo "${committerEmail}"
+                        //DEFAULT_RECIPIENTS=${ENV,var="committerEmail"}
                         //echo "$PWD"
                         //def GIT_EMAIL=$(/usr/bin/git --no-pager show -s --format='%ae' $GIT_COMMIT)
                         //echo "${GIT_COMMITTER_EMAIL}"
@@ -47,13 +47,13 @@ pipeline {
 
                         git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
                         
-                        def committerEmail = sh (
-                              script: 'git --no-pager show -s --format=\'%ae\'',
-                              returnStdout: true
-                            ).trim()
-                        echo "${committerEmail}"
+                        //def committerEmail = sh (
+                              //script: 'git --no-pager show -s --format=\'%ae\'',
+                              //returnStdout: true
+                            //).trim()
+                        //echo "${committerEmail}"
                         
-                        DEFAULT_RECIPIENTS=${ENV,var="committerEmail"}
+                        //DEFAULT_RECIPIENTS=${ENV,var="committerEmail"}
                         //echo "$PWD"
                         //def GIT_EMAIL=$(/usr/bin/git --no-pager show -s --format='%ae' $GIT_COMMIT)
                         //echo "${GIT_COMMITTER_EMAIL}"
@@ -68,23 +68,23 @@ pipeline {
             }
             post {
                 success {
-                    emailext (
+                    script: emailext (
                         
-                        to: '${DEFAULT_RECIPIENTS}',           
+                        //to: '${DEFAULT_RECIPIENTS}',           
                         subject: "Status of pipeline: Success ${currentBuild.fullDisplayName}",
                         body: """FINISHED Successfully: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
-                        //recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                        recipientProviders: [[$class: 'DevelopersRecipientProvider']]
                     )
 
                 }
 
                 failure {
-                    emailext (
+                    script: emailext (
                         
-                        to: '${DEFAULT_RECIPIENTS}',           
+                        //to: '${DEFAULT_RECIPIENTS}',           
                         subject: "Status of pipeline: Failure ${currentBuild.fullDisplayName}",
                         body: """Failed: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
-                        //recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                        recipientProviders: [[$class: 'DevelopersRecipientProvider']]
                     )
                 }
             }
@@ -105,9 +105,9 @@ pipeline {
             
             post {
                 success {
-                    emailext (
-                        //recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-                        to: '${DEFAULT_RECIPIENTS}',           
+                    script: emailext (
+                        recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                        //to: '${DEFAULT_RECIPIENTS}',           
                         subject: "Status of pipeline: Success ${currentBuild.fullDisplayName}",
                         body: """FINISHED Successfully: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
                     )
@@ -115,9 +115,9 @@ pipeline {
                 }
 
                 failure {
-                    emailext (
-                        //recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-                        to: '${DEFAULT_RECIPIENTS}',           
+                    script: emailext (
+                        recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                        //to: '${DEFAULT_RECIPIENTS}',           
                         subject: "Status of pipeline: Failure ${currentBuild.fullDisplayName}",
                         body: """Failed: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""            
                     )
@@ -128,7 +128,7 @@ pipeline {
     
     post {
         success {
-            emailext (
+            script: emailext (
 
             //step([$class: 'Mailer', notifyEveryUnstableBuild: true, sendToIndividuals: true, recipients: RECIPIENTS])
                 to: '${DEFAULT_RECIPIENTS}',           
@@ -139,7 +139,7 @@ pipeline {
         }
 
         failure {
-            emailext (
+            script: emailext (
                 to: '${DEFAULT_RECIPIENTS}',           
                 subject: "Status of Overall pipeline: ${currentBuild.fullDisplayName}",
                 body: """Failed: Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""            
