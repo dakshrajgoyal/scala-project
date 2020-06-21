@@ -64,7 +64,7 @@ pipeline {
                 success {
                     emailext (
                         
-                        to: '${committerEmail}',           
+                        mail to: 'echo ${committerEmail}',           
                         subject: "Status of pipeline: Success ${currentBuild.fullDisplayName}",
                         body: """FINISHED Successfully: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
                         //recipientProviders: [[$class: 'DevelopersRecipientProvider']]
@@ -75,7 +75,7 @@ pipeline {
                 failure {
                     emailext (
                         
-                        to: '${committerEmail}',           
+                        mail to: 'echo ${committerEmail}',           
                         subject: "Status of pipeline: Failure ${currentBuild.fullDisplayName}",
                         body: """Failed: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
                         //recipientProviders: [[$class: 'DevelopersRecipientProvider']]
@@ -101,7 +101,7 @@ pipeline {
                 success {
                     emailext (
                         //recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-                        to: '$committerEmail',           
+                        mail to: 'echo $committerEmail',           
                         subject: "Status of pipeline: Success ${currentBuild.fullDisplayName}",
                         body: """FINISHED Successfully: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
                     )
@@ -111,7 +111,7 @@ pipeline {
                 failure {
                     emailext (
                         //recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-                        to: '$committerEmail',           
+                        mail to: 'echo $committerEmail',           
                         subject: "Status of pipeline: Failure ${currentBuild.fullDisplayName}",
                         body: """Failed: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""            
                     )
