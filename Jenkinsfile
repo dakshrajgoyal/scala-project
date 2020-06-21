@@ -22,7 +22,8 @@ pipeline {
                               returnStdout: true
                             ).trim()
                         echo "${committerEmail}"
-                        DEFAULT_RECIPIENTS="${committerEmail}"
+                        DEFAULT_RECIPIENTS=${ENV,var="CAPITALIZED:committerEmail"}
+                        //DEFAULT_RECIPIENTS="${committerEmail}"
                         //echo "$PWD"
                         //def GIT_EMAIL=$($PWD/usr/bin/jgit show -s --format='%ae' $GIT_COMMIT)
                         //echo "${GIT_COMMITTER_EMAIL}"
@@ -36,7 +37,7 @@ pipeline {
                               returnStdout: true
                             ).trim()
                         echo "${committerEmail}"
-                        DEFAULT_RECIPIENTS="${committerEmail}"
+                        DEFAULT_RECIPIENTS=${ENV,var="CAPITALIZED:committerEmail"}
                         //echo "$PWD"
                         //def GIT_EMAIL=$(/usr/bin/git --no-pager show -s --format='%ae' $GIT_COMMIT)
                         //echo "${GIT_COMMITTER_EMAIL}"
@@ -52,7 +53,7 @@ pipeline {
                             ).trim()
                         echo "${committerEmail}"
                         
-                        DEFAULT_RECIPIENTS="${committerEmail}"
+                        DEFAULT_RECIPIENTS=${ENV,var="CAPITALIZED:committerEmail"}
                         //echo "$PWD"
                         //def GIT_EMAIL=$(/usr/bin/git --no-pager show -s --format='%ae' $GIT_COMMIT)
                         //echo "${GIT_COMMITTER_EMAIL}"
