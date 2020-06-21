@@ -95,18 +95,17 @@ pipeline {
     
     post {
         success {
-            emailext (
-                final def RECIPIENTS = emailextrecipients([
-                       [$class: 'DevelopersRecipientProvider'],
-                       [$class: 'CulpritsRecipientProvider']
-                   ])
+            def RECIPIENTS emailext ([
+            //def RECIPIENTS = emailextrecipients([
+                   [$class: 'DevelopersRecipientProvider'],
+                   [$class: 'CulpritsRecipientProvider']
+             ])
 
 
-                step([$class: 'Mailer', notifyEveryUnstableBuild: true, sendToIndividuals: true, recipients: RECIPIENTS])
+            step([$class: 'Mailer', notifyEveryUnstableBuild: true, sendToIndividuals: true, recipients: RECIPIENTS])
                 //to: '$DEFAULT_RECIPIENTS',           
                 //subject: "Status of Overall pipeline:  ${currentBuild.fullDisplayName}",
                 //body: """FINISHED Successfully: Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
-            )
 
         }
 
