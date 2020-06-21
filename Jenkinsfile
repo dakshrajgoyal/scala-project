@@ -16,9 +16,15 @@ pipeline {
                         echo "Cloning the Master Branch"
 
                         git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
+                        
+                        committerEmail = sh (
+                              'git --no-pager show -s --format=\'%ae\'',
+                              returnStdout: true
+                            ).trim()
+                        echo "${committerEmail}"
                         //echo "$PWD"
                         //def GIT_EMAIL=$($PWD/usr/bin/jgit show -s --format='%ae' $GIT_COMMIT)
-                        echo "${GIT_COMMITTER_EMAIL}"
+                        //echo "${GIT_COMMITTER_EMAIL}"
 
                     } else if (env.BRANCH_NAME == "feature") {
                         echo "Cloning the release branch"
@@ -26,7 +32,7 @@ pipeline {
                         git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
                         //echo "$PWD"
                         //def GIT_EMAIL=$(/usr/bin/git --no-pager show -s --format='%ae' $GIT_COMMIT)
-                        echo "${GIT_COMMITTER_EMAIL}"
+                        //echo "${GIT_COMMITTER_EMAIL}"
 
                     } else if (env.BRANCH_NAME == "devint") {
                         echo "Cloning the dev_int branch"
@@ -34,7 +40,7 @@ pipeline {
                         git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
                         echo "$PWD"
                         //def GIT_EMAIL=$(/usr/bin/git --no-pager show -s --format='%ae' $GIT_COMMIT)
-                        echo "${GIT_COMMITTER_EMAIL}"
+                        //echo "${GIT_COMMITTER_EMAIL}"
                     
                     } else {
                         
