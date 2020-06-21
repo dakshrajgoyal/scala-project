@@ -17,11 +17,12 @@ pipeline {
 
                         git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
                         
-                        def env.committerEmail = sh (
+                        def committerEmail = sh (
                               script: 'git --no-pager show -s --format=\'%ae\'',
                               returnStdout: true
                             ).trim()
                         echo "${committerEmail}"
+                        env.recipient=echo "${committerEmail}"
                         //echo "$PWD"
                         //def GIT_EMAIL=$($PWD/usr/bin/jgit show -s --format='%ae' $GIT_COMMIT)
                         //echo "${GIT_COMMITTER_EMAIL}"
@@ -30,11 +31,12 @@ pipeline {
                         echo "Cloning the release branch"
 
                         git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
-                        def env.committerEmail = sh (
+                        def committerEmail = sh (
                               script: 'git --no-pager show -s --format=\'%ae\'',
                               returnStdout: true
                             ).trim()
                         echo "${committerEmail}"
+                        env.FILENAME=echo "${committerEmail}"
                         //echo "$PWD"
                         //def GIT_EMAIL=$(/usr/bin/git --no-pager show -s --format='%ae' $GIT_COMMIT)
                         //echo "${GIT_COMMITTER_EMAIL}"
@@ -44,11 +46,13 @@ pipeline {
 
                         git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
                         
-                        def env.committerEmail = sh (
+                        def committerEmail = sh (
                               script: 'git --no-pager show -s --format=\'%ae\'',
                               returnStdout: true
                             ).trim()
                         echo "${committerEmail}"
+                        
+                        env.FILENAME=echo "${committerEmail}"
                         //echo "$PWD"
                         //def GIT_EMAIL=$(/usr/bin/git --no-pager show -s --format='%ae' $GIT_COMMIT)
                         //echo "${GIT_COMMITTER_EMAIL}"
@@ -58,14 +62,14 @@ pipeline {
                         echo "Checkout done in respective branch"
                         
                     }
-                    echo "${env.committerEmail}"
+                    echo "${env.FILENAME}"
                 }
             }
             post {
                 success {
                     emailext (
                         
-                        to: '${env.committerEmail}',           
+                        to: '${env.FILENAME}',           
                         subject: "Status of pipeline: Success ${currentBuild.fullDisplayName}",
                         body: """FINISHED Successfully: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
                         //recipientProviders: [[$class: 'DevelopersRecipientProvider']]
