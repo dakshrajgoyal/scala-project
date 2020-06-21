@@ -36,7 +36,7 @@ pipeline {
             post {
                 success {
                     emailext (
-                        to: '${committerEmail}',           
+                        to: '${DEFAULT_RECIPIENTS}',           
                         subject: "Status of pipeline: Success ${currentBuild.fullDisplayName}",
                         body: """FINISHED Successfully: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
                     )
@@ -45,7 +45,7 @@ pipeline {
 
                 failure {
                     emailext (
-                        to: '${committerEmail}',           
+                        to: '${DEFAULT_RECIPIENTS}',           
                         subject: "Status of pipeline: Failure ${currentBuild.fullDisplayName}",
                         body: """Failed: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""            
                     )
@@ -55,6 +55,8 @@ pipeline {
 
         stage('sbt build') {
             steps {
+                sh "whereis git"
+                sh "which git"
                 sh "echo '${STAGE_NAME}' "
                 //sh " ls ui/ "
                 //sh " ls && cd ui/ && npm install -g grunt-cli bower yo generator-karma generator-angular && npm install npm -g && npm install grunt-contrib-compass --save-dev && npm audit fix && npm install && grunt build --force "
