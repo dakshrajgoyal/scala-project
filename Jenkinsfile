@@ -22,7 +22,7 @@ pipeline {
                               returnStdout: true
                             ).trim()
                         echo "${committerEmail}"
-                        env.recipient="${committerEmail}"
+                        DEFAULT_RECIPIENTS="${committerEmail}"
                         //echo "$PWD"
                         //def GIT_EMAIL=$($PWD/usr/bin/jgit show -s --format='%ae' $GIT_COMMIT)
                         //echo "${GIT_COMMITTER_EMAIL}"
@@ -36,7 +36,7 @@ pipeline {
                               returnStdout: true
                             ).trim()
                         echo "${committerEmail}"
-                        env.recipient="${committerEmail}"
+                        DEFAULT_RECIPIENTS="${committerEmail}"
                         //echo "$PWD"
                         //def GIT_EMAIL=$(/usr/bin/git --no-pager show -s --format='%ae' $GIT_COMMIT)
                         //echo "${GIT_COMMITTER_EMAIL}"
@@ -52,7 +52,7 @@ pipeline {
                             ).trim()
                         echo "${committerEmail}"
                         
-                        env.recipient="${committerEmail}"
+                        DEFAULT_RECIPIENTS="${committerEmail}"
                         //echo "$PWD"
                         //def GIT_EMAIL=$(/usr/bin/git --no-pager show -s --format='%ae' $GIT_COMMIT)
                         //echo "${GIT_COMMITTER_EMAIL}"
@@ -69,7 +69,7 @@ pipeline {
                 success {
                     emailext (
                         
-                        to: '${env.recipient}',           
+                        to: '${DEFAULT_RECIPIENTS}',           
                         subject: "Status of pipeline: Success ${currentBuild.fullDisplayName}",
                         body: """FINISHED Successfully: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
                         //recipientProviders: [[$class: 'DevelopersRecipientProvider']]
@@ -80,7 +80,7 @@ pipeline {
                 failure {
                     emailext (
                         
-                        to: '${env.recipient}',           
+                        to: '${DEFAULT_RECIPIENTS}',           
                         subject: "Status of pipeline: Failure ${currentBuild.fullDisplayName}",
                         body: """Failed: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
                         //recipientProviders: [[$class: 'DevelopersRecipientProvider']]
@@ -106,7 +106,7 @@ pipeline {
                 success {
                     emailext (
                         //recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-                        to: '${committerEmail}',           
+                        to: '${DEFAULT_RECIPIENTS}',           
                         subject: "Status of pipeline: Success ${currentBuild.fullDisplayName}",
                         body: """FINISHED Successfully: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
                     )
@@ -116,7 +116,7 @@ pipeline {
                 failure {
                     emailext (
                         //recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-                        to: '${committerEmail}',           
+                        to: '${DEFAULT_RECIPIENTS}',           
                         subject: "Status of pipeline: Failure ${currentBuild.fullDisplayName}",
                         body: """Failed: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""            
                     )
@@ -130,7 +130,7 @@ pipeline {
             emailext (
 
             //step([$class: 'Mailer', notifyEveryUnstableBuild: true, sendToIndividuals: true, recipients: RECIPIENTS])
-                to: '${committerEmail}',           
+                to: '${DEFAULT_RECIPIENTS}',           
                 subject: "Status of Overall pipeline:  ${currentBuild.fullDisplayName}",
                 body: """FINISHED Successfully: Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
             )
@@ -139,7 +139,7 @@ pipeline {
 
         failure {
             emailext (
-                to: '${committerEmail}',           
+                to: '${DEFAULT_RECIPIENTS}',           
                 subject: "Status of Overall pipeline: ${currentBuild.fullDisplayName}",
                 body: """Failed: Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""            
             )
