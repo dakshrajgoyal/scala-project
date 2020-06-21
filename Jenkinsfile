@@ -5,6 +5,7 @@ pipeline {
         stage("SCM Checkout") {
             steps {
                 script {
+                    
                     //def committerEmail = sh (
                       //script: 'git --no-pager show -s --format=\'%ae\'',
                       //returnStdout: true
@@ -31,13 +32,16 @@ pipeline {
                         echo "Checkout done in respective branch"
                         
                     }
+                    
+                    GIT_EMAIL=$(git --no-pager show -s --format='%ae' $GIT_COMMIT)
+                    echo "$GIT_EMAIL"
                 }
             }
             post {
                 success {
                     emailext (
                         
-                        //to: '${DEFAULT_RECIPIENTS}',           
+                        to: '${DEFAULT_RECIPIENTS}',           
                         subject: "Status of pipeline: Success ${currentBuild.fullDisplayName}",
                         body: """FINISHED Successfully: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
                         //recipientProviders: [[$class: 'DevelopersRecipientProvider']]
@@ -48,7 +52,7 @@ pipeline {
                 failure {
                     emailext (
                         
-                        //to: '${DEFAULT_RECIPIENTS}',           
+                        to: '${DEFAULT_RECIPIENTS}',           
                         subject: "Status of pipeline: Failure ${currentBuild.fullDisplayName}",
                         body: """Failed: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
                         //recipientProviders: [[$class: 'DevelopersRecipientProvider']]
@@ -74,7 +78,7 @@ pipeline {
                 success {
                     emailext (
                         //recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-                        //to: '$DEFAULT_RECIPIENTS',           
+                        to: '$DEFAULT_RECIPIENTS',           
                         subject: "Status of pipeline: Success ${currentBuild.fullDisplayName}",
                         body: """FINISHED Successfully: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
                     )
@@ -84,7 +88,7 @@ pipeline {
                 failure {
                     emailext (
                         //recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-                        //to: '$DEFAULT_RECIPIENTS',           
+                        to: '$DEFAULT_RECIPIENTS',           
                         subject: "Status of pipeline: Failure ${currentBuild.fullDisplayName}",
                         body: """Failed: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""            
                     )
@@ -95,17 +99,13 @@ pipeline {
     
     post {
         success {
-            def RECIPIENTS emailext ([
-            //def RECIPIENTS = emailextrecipients([
-                   [$class: 'DevelopersRecipientProvider'],
-                   [$class: 'CulpritsRecipientProvider']
-             ])
+            emailext (
 
-
-            step([$class: 'Mailer', notifyEveryUnstableBuild: true, sendToIndividuals: true, recipients: RECIPIENTS])
-                //to: '$DEFAULT_RECIPIENTS',           
-                //subject: "Status of Overall pipeline:  ${currentBuild.fullDisplayName}",
-                //body: """FINISHED Successfully: Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
+            //step([$class: 'Mailer', notifyEveryUnstableBuild: true, sendToIndividuals: true, recipients: RECIPIENTS])
+                to: '$DEFAULT_RECIPIENTS',           
+                subject: "Status of Overall pipeline:  ${currentBuild.fullDisplayName}",
+                body: """FINISHED Successfully: Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
+            )
 
         }
 
