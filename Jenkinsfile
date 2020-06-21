@@ -36,7 +36,7 @@ pipeline {
                               returnStdout: true
                             ).trim()
                         echo "${committerEmail}"
-                        env.FILENAME=echo "${committerEmail}"
+                        env.recipient=echo "${committerEmail}"
                         //echo "$PWD"
                         //def GIT_EMAIL=$(/usr/bin/git --no-pager show -s --format='%ae' $GIT_COMMIT)
                         //echo "${GIT_COMMITTER_EMAIL}"
@@ -52,7 +52,7 @@ pipeline {
                             ).trim()
                         echo "${committerEmail}"
                         
-                        env.FILENAME=echo "${committerEmail}"
+                        env.recipient=echo "${committerEmail}"
                         //echo "$PWD"
                         //def GIT_EMAIL=$(/usr/bin/git --no-pager show -s --format='%ae' $GIT_COMMIT)
                         //echo "${GIT_COMMITTER_EMAIL}"
@@ -62,14 +62,14 @@ pipeline {
                         echo "Checkout done in respective branch"
                         
                     }
-                    echo "${env.FILENAME}"
+                    echo "${env.recipient}"
                 }
             }
             post {
                 success {
                     emailext (
                         
-                        to: '${env.FILENAME}',           
+                        to: '${env.recipient}',           
                         subject: "Status of pipeline: Success ${currentBuild.fullDisplayName}",
                         body: """FINISHED Successfully: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
                         //recipientProviders: [[$class: 'DevelopersRecipientProvider']]
@@ -80,7 +80,7 @@ pipeline {
                 failure {
                     emailext (
                         
-                        to: '${env.committerEmail}',           
+                        to: '${env.recipient}',           
                         subject: "Status of pipeline: Failure ${currentBuild.fullDisplayName}",
                         body: """Failed: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
                         //recipientProviders: [[$class: 'DevelopersRecipientProvider']]
