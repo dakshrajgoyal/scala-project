@@ -8,9 +8,8 @@ pipeline {
                 script {
                     def COMMITTER_EMAIL = bat(
                             script: "git --no-pager show -s --format='%%ae'",
-                            returnStdout: true).split('\r\n')[2].trim() 
-                            echo "COMMITTER_EMAIL: ${COMMITTER_EMAIL}"
-                    )
+                            returnStdout: true).split('\r\n')[2].trim()
+                    echo "COMMITTER_EMAIL: ${COMMITTER_EMAIL}"
                     //def foo=$(git show -s --pretty=%an)
                     echo "${STAGE_NAME}"
                     
