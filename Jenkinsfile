@@ -37,7 +37,7 @@ pipeline {
             post {
                 success {
                     emailext (
-                        to: '${COMMITTER_EMAIL}',           
+                        to: '${DEFAULT_RECIPIENTS}',           
                         subject: "Status of pipeline: Success ${currentBuild.fullDisplayName}",
                         body: """FINISHED Successfully: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
                     )
@@ -46,7 +46,7 @@ pipeline {
 
                 failure {
                     emailext (
-                        to: '${COMMITTER_EMAIL}',           
+                        to: '${DEFAULT_RECIPIENTS}',           
                         subject: "Status of pipeline: Failure ${currentBuild.fullDisplayName}",
                         body: """Failed: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""            
                     )
