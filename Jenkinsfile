@@ -6,6 +6,11 @@ pipeline {
         stage("SCM Checkout") {
             steps {
                 script {
+                    def COMMITTER_EMAIL = bat(
+                            script: "git --no-pager show -s --format='%%ae'",
+                            returnStdout: true).split('\r\n')[2].trim() 
+                            echo "COMMITTER_EMAIL: ${COMMITTER_EMAIL}"
+                    )
                     //def foo=$(git show -s --pretty=%an)
                     echo "${STAGE_NAME}"
                     
@@ -34,7 +39,7 @@ pipeline {
             post {
                 success {
                     emailext (
-                        to: '${env.GIT_COMMITTER_EMAIL}',           
+                        to: '${COMMITTER_EMAIL}',           
                         subject: "Status of pipeline: Success ${currentBuild.fullDisplayName}",
                         body: """FINISHED Successfully: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
                     )
@@ -43,7 +48,7 @@ pipeline {
 
                 failure {
                     emailext (
-                        to: '${foo}',           
+                        to: '${COMMITTER_EMAIL}',           
                         subject: "Status of pipeline: Failure ${currentBuild.fullDisplayName}",
                         body: """Failed: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""            
                     )
