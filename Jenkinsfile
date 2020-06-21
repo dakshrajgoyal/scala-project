@@ -17,7 +17,7 @@ pipeline {
 
                         git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
                         //echo "$PWD"
-                        def GIT_EMAIL=$($PWD/usr/bin/git show -s --format='%ae' $GIT_COMMIT)
+                        def GIT_EMAIL=$($PWD/usr/bin/jgit show -s --format='%ae' $GIT_COMMIT)
                         echo "${GIT_EMAIL}"
 
                     } else if (env.BRANCH_NAME == "feature") {
