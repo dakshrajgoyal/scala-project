@@ -6,9 +6,10 @@ pipeline {
         stage("SCM Checkout") {
             steps {
                 script {
-                    def author = sh script: "git show -s --pretty=\"%an <%ae>\" ${GIT_COMMIT}", returnStdout: true
+                    //def author = sh script: "git show -s --pretty=\"%an <%ae>\" ${GIT_COMMIT}", returnStdout: true
                     //def foo=$(git show -s --pretty=%an)
-                    echo "${author}"
+                    //echo "${author}"
+                    echo $"{env.GIT_AUTHOR_EMAIL}"
                     echo "${STAGE_NAME}"
                     
                     if (env.BRANCH_NAME == "master") {
