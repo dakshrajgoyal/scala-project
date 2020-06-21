@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
 
@@ -6,10 +5,10 @@ pipeline {
         stage("SCM Checkout") {
             steps {
                 script {
-                    //def author = sh script: "git show -s --pretty=\"%an <%ae>\" ${GIT_COMMIT}", returnStdout: true
-                    //def foo=$(git show -s --pretty=%an)
-                    //echo "${author}"
-                    echo $"{env.GIT_AUTHOR_EMAIL}"
+                    def committerEmail = sh (
+                      script: 'git --no-pager show -s --format=\'%ae\'',
+                      returnStdout: true
+                    ).trim()
                     echo "${STAGE_NAME}"
                     
                     if (env.BRANCH_NAME == "master") {
@@ -37,7 +36,7 @@ pipeline {
             post {
                 success {
                     emailext (
-                        to: '${DEFAULT_RECIPIENTS}',           
+                        to: '${committerEmail}',           
                         subject: "Status of pipeline: Success ${currentBuild.fullDisplayName}",
                         body: """FINISHED Successfully: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
                     )
@@ -46,7 +45,7 @@ pipeline {
 
                 failure {
                     emailext (
-                        to: '${DEFAULT_RECIPIENTS}',           
+                        to: '${committerEmail}',           
                         subject: "Status of pipeline: Failure ${currentBuild.fullDisplayName}",
                         body: """Failed: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""            
                     )
