@@ -125,7 +125,7 @@ pipeline {
             emailext (
 
             //step([$class: 'Mailer', notifyEveryUnstableBuild: true, sendToIndividuals: true, recipients: RECIPIENTS])
-                mail to: '${committerEmail}',           
+                to: '${committerEmail}',           
                 subject: "Status of Overall pipeline:  ${currentBuild.fullDisplayName}",
                 body: """FINISHED Successfully: Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
             )
@@ -134,7 +134,7 @@ pipeline {
 
         failure {
             emailext (
-                mail to: '${committerEmail}',           
+                to: '${committerEmail}',           
                 subject: "Status of Overall pipeline: ${currentBuild.fullDisplayName}",
                 body: """Failed: Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""            
             )
