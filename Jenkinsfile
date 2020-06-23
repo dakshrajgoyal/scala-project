@@ -144,6 +144,6 @@ pipeline {
                 subject: "Status of Overall pipeline: ${currentBuild.fullDisplayName}",
                 body: """Failed: Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""            
             )
-        }
+        } 
     }
 }
