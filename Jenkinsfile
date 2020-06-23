@@ -113,7 +113,7 @@ pipeline {
                                             requestor(),
                                             brokenBuildSuspects(),
                                             brokenTestsSuspects(),
-                                            upstreamDevelopers()]
+                                            upstreamDevelopers()],
                         subject: "Status of pipeline: Success ${currentBuild.fullDisplayName}",
                         body: """FINISHED Successfully: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
                     )
@@ -128,7 +128,7 @@ pipeline {
                                             requestor(),
                                             brokenBuildSuspects(),
                                             brokenTestsSuspects(),
-                                            upstreamDevelopers()]
+                                            upstreamDevelopers()],
                         //to: '${DEFAULT_RECIPIENTS}',           
                         subject: "Status of pipeline: Failure ${currentBuild.fullDisplayName}",
                         body: """Failed: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""            
@@ -149,7 +149,7 @@ pipeline {
                                     requestor(),
                                     brokenBuildSuspects(),
                                     brokenTestsSuspects(),
-                                    upstreamDevelopers()]
+                                    upstreamDevelopers()],
                 subject: "Status of Overall pipeline:  ${currentBuild.fullDisplayName}",
                 body: """FINISHED Successfully: Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
             )
@@ -164,7 +164,7 @@ pipeline {
                                     requestor(),
                                     brokenBuildSuspects(),
                                     brokenTestsSuspects(),
-                                    upstreamDevelopers()]
+                                    upstreamDevelopers()],
                 subject: "Status of Overall pipeline: ${currentBuild.fullDisplayName}",
                 body: """Failed: Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""            
             )
