@@ -17,74 +17,52 @@ pipeline {
 
                         git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
                         
-                        //def committerEmail = sh (
-                              //script: 'git --no-pager show -s --format=\'%ae\'',
-                              //returnStdout: true
-                            //).trim()
-                        //echo "${committerEmail}"
-                        //DEFAULT_RECIPIENTS=${ENV,var="committerEmail"}
-                        //DEFAULT_RECIPIENTS="${committerEmail}"
-                        //echo "$PWD"
-                        //def GIT_EMAIL=$($PWD/usr/bin/jgit show -s --format='%ae' $GIT_COMMIT)
-                        //echo "${GIT_COMMITTER_EMAIL}"
 
                     } else if (env.BRANCH_NAME == "feature") {
                         echo "Cloning the release branch"
 
                         git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
-                        //def committerEmail = sh (
-                              //script: 'git --no-pager show -s --format=\'%ae\'',
-                              //returnStdout: true
-                            //).trim()
-                        //echo "${committerEmail}"
-                        //DEFAULT_RECIPIENTS=${ENV,var="committerEmail"}
-                        //echo "$PWD"
-                        //def GIT_EMAIL=$(/usr/bin/git --no-pager show -s --format='%ae' $GIT_COMMIT)
-                        //echo "${GIT_COMMITTER_EMAIL}"
+            
 
                     } else if (env.BRANCH_NAME == "devint") {
                         echo "Cloning the dev_int branch"
 
                         git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
-                        
-                        //def committerEmail = sh (
-                              //script: 'git --no-pager show -s --format=\'%ae\'',
-                              //returnStdout: true
-                            //).trim()
-                        //echo "${committerEmail}"
-                        
-                        //DEFAULT_RECIPIENTS=${ENV,var="committerEmail"}
-                        //echo "$PWD"
-                        //def GIT_EMAIL=$(/usr/bin/git --no-pager show -s --format='%ae' $GIT_COMMIT)
-                        //echo "${GIT_COMMITTER_EMAIL}"
                     
                     } else {
                         
                         echo "Checkout done in respective branch"
                         
                     }
-                    //echo "${env.recipient}"
                 }
             }
             post {
                 success {
                     script: emailext (
-                        
-                        //to: '${DEFAULT_RECIPIENTS}',           
-                        subject: "Status of pipeline: Success ${currentBuild.fullDisplayName}",
-                        body: """FINISHED Successfully: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)""",
-                        recipientProviders: [[$class: 'DevelopersRecipientProvider'],[$class: 'CulpritsRecipientProvider'],[$class: 'UpstreamComitterRecipientProvider'],[ $class: 'RequesterRecipientProvider' ]]
-                    )
 
+                    
+                        recipientProviders: [culprits(),
+                                    developers(),
+                                    requestor(),
+                                    brokenBuildSuspects(),
+                                    brokenTestsSuspects(),
+                                    upstreamDevelopers()],
+                        subject: "Status of pipeline: Success ${currentBuild.fullDisplayName}",
+                        body: """FINISHED Successfully: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
+                    )
                 }
 
                 failure {
                     script: emailext (
                         
-                        //to: '${DEFAULT_RECIPIENTS}',           
+                        recipientProviders: [culprits(),
+                                    developers(),
+                                    requestor(),
+                                    brokenBuildSuspects(),
+                                    brokenTestsSuspects(),
+                                    upstreamDevelopers()],          
                         subject: "Status of pipeline: Failure ${currentBuild.fullDisplayName}",
-                        body: """Failed: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)""",
-                        recipientProviders: [[$class: 'DevelopersRecipientProvider'],[$class: 'CulpritsRecipientProvider'],[$class: 'UpstreamComitterRecipientProvider'],[ $class: 'RequesterRecipientProvider' ]]
+                        body: """Failed: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
                     )
                 }
             }
@@ -105,9 +83,7 @@ pipeline {
             
             post {
                 success {
-                    script: emailext (
-                     //   recipientProviders: [[$class: 'DevelopersRecipientProvider'],[$class: 'CulpritsRecipientProvider'],[$class: 'UpstreamComitterRecipientProvider'],[ $class: 'RequesterRecipientProvider' ]],
-                        //to: '${DEFAULT_RECIPIENTS}',     
+                    script: emailext (    
                        recipientProviders: [culprits(),
                                             developers(),
                                             requestor(),
@@ -122,14 +98,12 @@ pipeline {
 
                 failure {
                     script: emailext (
-                  //      recipientProviders: [[$class: 'DevelopersRecipientProvider'],[$class: 'CulpritsRecipientProvider'],[$class: 'UpstreamComitterRecipientProvider'],[ $class: 'RequesterRecipientProvider' ]],
                         recipientProviders: [culprits(),
                                             developers(),
                                             requestor(),
                                             brokenBuildSuspects(),
                                             brokenTestsSuspects(),
-                                            upstreamDevelopers()],
-                        //to: '${DEFAULT_RECIPIENTS}',           
+                                            upstreamDevelopers()],          
                         subject: "Status of pipeline: Failure ${currentBuild.fullDisplayName}",
                         body: """Failed: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""            
                     )
@@ -140,10 +114,7 @@ pipeline {
     
     post {
         success {
-            script: emailext (
-
-            //step([$class: 'Mailer', notifyEveryUnstableBuild: true, sendToIndividuals: true, recipients: RECIPIENTS])
-            //    recipientProviders: [[$class: 'DevelopersRecipientProvider'],[$class: 'CulpritsRecipientProvider'],[$class: 'UpstreamComitterRecipientProvider'],[ $class: 'RequesterRecipientProvider' ]],           
+            script: emailext (        
                 recipientProviders: [culprits(),
                                     developers(),
                                     requestor(),
@@ -158,7 +129,6 @@ pipeline {
 
         failure {
             script: emailext (
-          //      recipientProviders: [[$class: 'DevelopersRecipientProvider'],[$class: 'CulpritsRecipientProvider'],[$class: 'UpstreamComitterRecipientProvider'],[ $class: 'RequesterRecipientProvider' ]],           
                 recipientProviders: [culprits(),
                                     developers(),
                                     requestor(),
@@ -171,5 +141,3 @@ pipeline {
         } 
     }
 }
-
-
