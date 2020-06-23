@@ -106,8 +106,14 @@ pipeline {
             post {
                 success {
                     script: emailext (
-                        recipientProviders: [[$class: 'DevelopersRecipientProvider'],[$class: 'CulpritsRecipientProvider'],[$class: 'UpstreamComitterRecipientProvider'],[ $class: 'RequesterRecipientProvider' ]],
-                        //to: '${DEFAULT_RECIPIENTS}',           
+                     //   recipientProviders: [[$class: 'DevelopersRecipientProvider'],[$class: 'CulpritsRecipientProvider'],[$class: 'UpstreamComitterRecipientProvider'],[ $class: 'RequesterRecipientProvider' ]],
+                        //to: '${DEFAULT_RECIPIENTS}',     
+                       recipientProviders: [culprits(),
+                                            developers(),
+                                            requestor(),
+                                            brokenBuildSuspects(),
+                                            brokenTestsSuspects(),
+                                            upstreamDevelopers()]
                         subject: "Status of pipeline: Success ${currentBuild.fullDisplayName}",
                         body: """FINISHED Successfully: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
                     )
@@ -116,7 +122,13 @@ pipeline {
 
                 failure {
                     script: emailext (
-                        recipientProviders: [[$class: 'DevelopersRecipientProvider'],[$class: 'CulpritsRecipientProvider'],[$class: 'UpstreamComitterRecipientProvider'],[ $class: 'RequesterRecipientProvider' ]],
+                  //      recipientProviders: [[$class: 'DevelopersRecipientProvider'],[$class: 'CulpritsRecipientProvider'],[$class: 'UpstreamComitterRecipientProvider'],[ $class: 'RequesterRecipientProvider' ]],
+                        recipientProviders: [culprits(),
+                                            developers(),
+                                            requestor(),
+                                            brokenBuildSuspects(),
+                                            brokenTestsSuspects(),
+                                            upstreamDevelopers()]
                         //to: '${DEFAULT_RECIPIENTS}',           
                         subject: "Status of pipeline: Failure ${currentBuild.fullDisplayName}",
                         body: """Failed: "${STAGE_NAME}" Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""            
@@ -131,7 +143,13 @@ pipeline {
             script: emailext (
 
             //step([$class: 'Mailer', notifyEveryUnstableBuild: true, sendToIndividuals: true, recipients: RECIPIENTS])
-                recipientProviders: [[$class: 'DevelopersRecipientProvider'],[$class: 'CulpritsRecipientProvider'],[$class: 'UpstreamComitterRecipientProvider'],[ $class: 'RequesterRecipientProvider' ]],           
+            //    recipientProviders: [[$class: 'DevelopersRecipientProvider'],[$class: 'CulpritsRecipientProvider'],[$class: 'UpstreamComitterRecipientProvider'],[ $class: 'RequesterRecipientProvider' ]],           
+                recipientProviders: [culprits(),
+                                    developers(),
+                                    requestor(),
+                                    brokenBuildSuspects(),
+                                    brokenTestsSuspects(),
+                                    upstreamDevelopers()]
                 subject: "Status of Overall pipeline:  ${currentBuild.fullDisplayName}",
                 body: """FINISHED Successfully: Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""
             )
@@ -140,7 +158,13 @@ pipeline {
 
         failure {
             script: emailext (
-                recipientProviders: [[$class: 'DevelopersRecipientProvider'],[$class: 'CulpritsRecipientProvider'],[$class: 'UpstreamComitterRecipientProvider'],[ $class: 'RequesterRecipientProvider' ]],           
+          //      recipientProviders: [[$class: 'DevelopersRecipientProvider'],[$class: 'CulpritsRecipientProvider'],[$class: 'UpstreamComitterRecipientProvider'],[ $class: 'RequesterRecipientProvider' ]],           
+                recipientProviders: [culprits(),
+                                    developers(),
+                                    requestor(),
+                                    brokenBuildSuspects(),
+                                    brokenTestsSuspects(),
+                                    upstreamDevelopers()]
                 subject: "Status of Overall pipeline: ${currentBuild.fullDisplayName}",
                 body: """Failed: Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL}console)"""            
             )
