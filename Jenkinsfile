@@ -12,22 +12,22 @@ pipeline {
                     
                     echo "${STAGE_NAME}"
                     
-                    if (env.BRANCH_NAME == "master") {
+                    if (env.BRANCH_NAME == "master" && env.CHANGE_ID != null) {
                         echo "Cloning the Master Branch"
 
-                        git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
+                        git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git", refspec: '+refs/pull/*:refs/remotes/origin/pr/*'
                         
 
-                    } else if (env.BRANCH_NAME == "feature") {
+                    } else if (env.BRANCH_NAME == "feature" && env.CHANGE_ID != null) {
                         echo "Cloning the release branch"
 
-                        git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
+                        git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git", refspec: "+refs/pull/*:refs/remotes/origin/pr/*"
             
 
-                    } else if (env.BRANCH_NAME == "devint") {
+                    } else if (env.BRANCH_NAME == "devint" && env.CHANGE_ID != null) {
                         echo "Cloning the dev_int branch"
 
-                        git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
+                        git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git", refspec: "+refs/pull/*:refs/remotes/origin/pr/*"
                     
                     } else {
                         
@@ -70,8 +70,6 @@ pipeline {
 
         stage('sbt build') {
             steps {
-                //sh "whereis git"
-                //sh "which git"
                 sh "echo '${STAGE_NAME}' "
                 //sh " ls ui/ "
                 //sh " ls && cd ui/ && npm install -g grunt-cli bower yo generator-karma generator-angular && npm install npm -g && npm install grunt-contrib-compass --save-dev && npm audit fix && npm install && grunt build --force "
