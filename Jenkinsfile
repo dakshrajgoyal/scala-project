@@ -15,19 +15,19 @@ pipeline {
                     if (env.BRANCH_NAME == "master") {
                         echo "Cloning the Master Branch"
 
-                        git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git", fetch: "+refs/pull/*/head:refs/remotes/origin/pr/*"
+                        git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
                         
 
                     } else if (env.BRANCH_NAME == "feature") {
                         echo "Cloning the release branch"
 
-                        git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git", fetch: "+refs/pull/*/head:refs/remotes/origin/pr/*"
+                        git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
             
 
                     } else if (env.BRANCH_NAME == "devint") {
                         echo "Cloning the dev_int branch"
 
-                        git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git", fetch: "+refs/pull/*/head:refs/remotes/origin/pr/*"
+                        git branch: "${env.BRANCH_NAME}", credentialsId: "f05a7061-a0bc-4954-b42b-1d8a3674141c", url: "https://dakshrajgoyal@github.com/dakshrajgoyal/scala-project.git"
                     
                     } else {
                         
